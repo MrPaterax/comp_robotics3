@@ -22,6 +22,34 @@ def visualize_path(q_1, q_2, env, color=[0, 1, 0]):
     # draw line between points
     p.addUserDebugLine(point_1, point_2, color, 1.0)
 
+class SimpleGraph:
+    def __init__(V, E):
+        self.V = V
+        self.E = E
+        
+
+def SemiRandomSample(q_goal, steer_goal_p):
+    
+    if np.random.uniform() < steer_goal_p:
+        return q_goal
+    
+    else:
+       return np.random.uniform(-np.pi, np.pi, 6) 
+    
+def Nearest(V, q_rand):
+
+    shortest_dist = 10000
+    nearest_node = None
+    
+    for v in V: 
+        if(np.linalg.norm(v - q_rand) < shortest_dist):
+            shortest_dist = np.linalg.norm(v - q_rand)
+            nearest_node = V
+    
+    return nearest_node
+        
+
+
 def rrt(q_init, q_goal, MAX_ITERS, delta_q, steer_goal_p, env):
     """
     :param q_init: initial configuration
@@ -35,7 +63,8 @@ def rrt(q_init, q_goal, MAX_ITERS, delta_q, steer_goal_p, env):
     # Implement RRT code here. This function should return a list of joint configurations
     # that the robot should take in order to reach q_goal starting from q_init
     # Use visualize_path() to visualize the edges in the exploration tree for part (b)
-    
+    V = [q_init]
+    E = {0: []}
     
 
     # ==================================
